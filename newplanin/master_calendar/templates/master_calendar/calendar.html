@@ -11,7 +11,10 @@
 </head>
 <body>
 <div class = "info-box">
-    <div><h1>{{name}}님의 공유 캘린더입니다.</h1></div>
+    {%if user.is_authenticated%}
+    <a href = "/accounts/logout/">logout</a>
+    {% endif %}
+    <div><h1>{{user.username}}님의 공유 캘린더입니다.</h1></div>
 </div>
 <div class ="option-box">
     <!-- adjustable due date -->
