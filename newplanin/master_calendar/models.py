@@ -1,12 +1,11 @@
 from django.db import models
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
 #CRUD - C
-class User(models.Model) :
-    name = models.CharField(max_length=32)
-    gmail = models.EmailField(max_length=254)
+class User(AbstractUser) :
+    pass
 
 class Event(models.Model) :
     title = models.CharField(max_length=32)

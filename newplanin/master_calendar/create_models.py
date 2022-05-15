@@ -12,17 +12,26 @@ def create_user(name, gmail) :
 
 #owner_id 잠깐 없엠
 
-def create_event(title,start_date,end_date) :
+def create_event(title,start_date,end_date,owner_id) :
     new_event = Event()
     new_event.title = title
     new_event.start_date = start_date
     new_event.end_date = end_date
-    #new_event.owner = get_object_or_404(User, id= owner_id)
+    new_event.owner = get_object_or_404(User, id= owner_id)
     new_event.save()
     # print(new_event.owner.id, new_event.owner.name)
     return new_event
 
- 
+# def create_user(name,email) :
+#     new_user = User()
+#     new_user.password = "password12345"
+#     new_user.is_superuser = False
+#     new_user.username = name
+#     new_user.email = email
+#     new_user.save()
+#     return new_user
+
+
 def add_shared_user_to_event(event_id, user_id):
     print(event_id, user_id)
     target_event = get_object_or_404(Event, id=event_id)

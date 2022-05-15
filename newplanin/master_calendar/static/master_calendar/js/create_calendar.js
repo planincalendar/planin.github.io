@@ -67,9 +67,6 @@ async function sendAllEvents(){
         events: [],
     };
     allEvents.forEach(eventData => {
-        console.log(eventData.title);
-        console.log(eventData.start);
-        console.log(eventData.end);
         payload.events.push({
             "title" : eventData.title,
             "start": eventData.start,
