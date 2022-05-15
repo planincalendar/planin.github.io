@@ -19,8 +19,9 @@ def save_events(request):
         title = event.get("title") 
         start_date = event.get("start")
         end_date = event.get("end") 
+        owner_id = event.get("owner_id")
         
-        create_event(title,start_date,end_date)
+        create_event(title,start_date,end_date,owner_id)
     
     return JsonResponse({})
 

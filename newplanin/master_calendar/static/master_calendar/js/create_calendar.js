@@ -60,7 +60,8 @@ function drawCalendar() {
 }
 
 //일정 제출하기
-async function sendAllEvents(){
+async function sendAllEvents(userId){
+    console.log(userId)
     let allEvents = calendar.getEvents();
     
     let payload = {
@@ -71,6 +72,7 @@ async function sendAllEvents(){
             "title" : eventData.title,
             "start": eventData.start,
             "end" : eventData.end,
+            "owner_id": userId
         })
     });
 
