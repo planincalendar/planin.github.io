@@ -60,8 +60,8 @@ function drawCalendar() {
 }
 
 //일정 제출하기
-async function sendAllEvents(userId){
-    console.log(userId)
+async function sendAllEvents(user_id){
+    console.log(user_id)
     let allEvents = calendar.getEvents();
     
     let payload = {
@@ -72,7 +72,7 @@ async function sendAllEvents(userId){
             "title" : eventData.title,
             "start": eventData.start,
             "end" : eventData.end,
-            "owner_id": userId
+            "owner_id": user_id
         })
     });
 
@@ -113,8 +113,8 @@ function getCsrfToken() {
 }
 
 //일정을 캘린더에 추가하기 
-function addEventof(){
-    loadEventList().then(eventList => {
+function addEventof(user_id){
+    loadEventList(user_id).then(eventList => {
         for (const e of eventList.events) {
             let eventData = {
                 start: e.start_date,
@@ -134,13 +134,23 @@ function showCalendarof(){
 
 
 
-async function loadEventList(){
-    let response = await fetch('/calendar/load-events/');
+async function loadEventList(user_id){
+    let payload = {
+        owner_id: user_id
+    }
+    let response = await fetch('/calendar/load-events/',{
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCsrfToken(),
+        }
+    });
     if (response.status == 200){
         let responseBody = await response.json();
         return responseBody;        
     }else {
-        alert('오류발생')
+        alert('이벤트를 불러오는데 실패했습니다.')
     }
 }
 

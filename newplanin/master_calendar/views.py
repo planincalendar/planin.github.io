@@ -28,7 +28,9 @@ def save_events(request):
 
 def load_events(request) :
     # user_id ? 
-    event_owner = Event.objects.filter(owner_id = 16)
+    response_body = json.loads(request.body)
+    owner_id = response_body.get("owner_id")
+    event_owner = Event.objects.filter(owner_id = owner_id)
     event_list = list(event_owner.values('title','start_date','end_date'))
     return JsonResponse({
         "events" : event_list

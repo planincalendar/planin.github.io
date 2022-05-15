@@ -34,8 +34,8 @@
    </div>
     <!-- shared calendar -->
     <label for = "showcalendar"> 
-        <input type = "checkbox" id="showcalendar-jinhyun" name="showcalendar"  onclick="addEventof()"> 내 일정
-        <input type = "checkbox" id="showcalendar-hannah" name="showcalendar" onclick="addEventof()" > 오한나의 일정
+        <input type = "checkbox" id="showcalendar-jinhyun" name="showcalendar"  onclick="addEventof({{user.id}})"> 내 일정
+        <input type = "checkbox" id="showcalendar-hannah" name="showcalendar" onclick="addEventof(3)" > 공유 일정 (지금은 id 3 user)
     </label>
 </div>
 
