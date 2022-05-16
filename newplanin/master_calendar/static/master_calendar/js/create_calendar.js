@@ -12,28 +12,30 @@ function drawCalendar() {
     calendar = new FullCalendar.Calendar(calendarEl, {
         scrollTime: '08:00:00',
         businessHours : false,
-        eventConstraint: null, 
         expandRows: true,
         longPressDelay: 1000,
         slotMinTime: '00:00',
         slotMaxTime: '24:00',
-        selectable: true,
         dragScroll: true,
         editable: true,
         droppable: true,
         themeSystem: 'bootstrap5',
-        //timeZone: 'GMT+9',
+        timeZone: 'GMT+9',
         initialView: 'timeGridWeek',
-        firstDay: (new Date().getDay()), // duratin one week ?
+        validRange: {
+          },
+//        firstDay: (new Date().getDay()), 
         headerToolbar: {
             left: 'prev,next',
             center: 'title',
             right: 'today',
         },
         events : [
+            
         ],
         // 신규 이벤트 생성 
         selectable: true,
+        selectConstraint: null, 
         selectMirror: true,
         select: function(arg) {
             let title = prompt('일정 내용:');
@@ -53,11 +55,30 @@ function drawCalendar() {
             }
         },
         editable: true,
-        
+       
     });
 
     calendar.render();
+}    
+//일정 조정 기간 세팅하기 ... End date 가 자꾸 하루 전에 생성됨..
+function setBackgroundTime(){
+    const cal_start_date = document.getElementById("calendar-start-date");
+    const cal_end_date = document.getElementById("calendar-end-date");
+    //두 필드가 입력되면 캘린더 옵션에 validRange집어 넣기
+    if (!cal_start_date.value){
+        alert('시작 기간을 입력해주세요!')
+    }else if (!cal_end_date.value) {
+        alert('끝 기간을 입력해주세요!')
+    }else{
+        var payload = {
+        start : cal_start_date.value,
+        end : cal_end_date.value
+    }
+    calendar.setOption('validRange', payload);
+    }
 }
+
+
 
 //일정 제출하기
 async function sendAllEvents(user_id){
@@ -84,6 +105,9 @@ async function sendAllEvents(user_id){
         return;
     }
     alert('일정 제출이 완료되었습니다.');
+    let button  = document.getElementById("data-load");
+    button.disabled = true
+
     
     //제출하기 버튼이 수정하기로 변하기 
     // const element = document.getElementById("data-upload");
@@ -112,28 +136,47 @@ function getCsrfToken() {
         .split("=")[1];
 }
 
-//일정을 캘린더에 추가하기 
-function addEventof(user_id){
+//내 일정을 캘린더에 보여주고 지우기
+function showCommonEvent(user_id){
+    let checkbox = document.getElementById("common-event-checkbox")
+    if (checkbox.checked){
+        addEventList(user_id)
+    }else{
+        removeEventList(user_id)
+    }
+}
+
+
+function showEventof(user_id){
+let checkbox = document.getElementById("my-event-checkbox")
+    if (checkbox.checked){
+        addEventList(user_id)
+    }else{
+        removeEventList(user_id)
+    }
+}
+function addEventList(user_id){
     loadEventList(user_id).then(eventList => {
         for (const e of eventList.events) {
             let eventData = {
                 start: e.start_date,
                 end: e.end_date,
                 title: e.title,
+                id: e.owner_id,
             }
             calendar.addEvent(eventData);
         }
-        
+    })    
+}
+function removeEventList(user_id){
+    loadEventList(user_id).then(eventList => {
+        for (const e of eventList.events) {
+            let event_id = e.owner_id 
+            let event_of_the_id = calendar.getEventById(event_id)
+            event_of_the_id.remove()
+            }
     })
 }
-
-//각 사람들의 일정을 보여주기 
-function showCalendarof(){
-
-}
-
-
-
 async function loadEventList(user_id){
     let payload = {
         owner_id: user_id

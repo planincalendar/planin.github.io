@@ -15,8 +15,7 @@
     <a href = "x/accounts/logout/">logout</a>
     <div><h1>{{user.username}}님의 공유 캘린더입니다.</h1></div>
 </div>
-<div class ="master-option-box">
-    <!-- adjustable due date -->
+<!-- <div class ="master-option-box">
     <h3> 캘린더 설정</h3>
     <div id = adjustable-date>
       <label for="appt">일정 조정 기간:
@@ -26,14 +25,13 @@
         <button id = "calendar-start-end-date" onclick ="setBackgroundTime()"> 설정 </button>
       </label>
     </div>
-    <!-- business hour on off switch -->
     <div id = explanation> Working Hours (9am - 9pm)
       <label class="switch">
           <input type="checkbox" id="businessHours" onclick="buisnessHoursOnOff()"/>
           <span class="slider round"></span>
       </label>
    </div>
-</div>
+</div> -->
     <!-- shared calendar -->
     <label for = "showcalendar"> 
         <input type = "checkbox" id="my-event-checkbox" name="my-evnet"  onclick="showEventof({{user.id}})"> 내 일정
@@ -47,7 +45,7 @@
 <!-- <button onclick="promptBasedEvent()">추가하기</button>  -->
 <button id = "data-load" onclick="sendAllEvents({{user.id}})">제출하기</button>
 <br/>
-<button type="button" onclick="location.href = '/calendar/create-project/';">공유할 면접관 추가하기</button>
+<!-- <input type = "submit" value = "프로젝트 공유하기"></input> -->
 
 {% else %}
 <p>로그인하세요</p>

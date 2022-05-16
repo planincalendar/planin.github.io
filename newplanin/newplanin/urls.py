@@ -20,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('allauth.urls')),
     path('login/',include('login.urls')),
-    path('calendar/',include('master_calendar.urls'))
+    path('home/', include('home.urls')),
+    path('calendar/',include('master_calendar.urls')),
+    
 
 ]
