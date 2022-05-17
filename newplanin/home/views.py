@@ -28,7 +28,7 @@ def create_project(request) :
         end_date = request.POST["project-end-date"]
         new_project = create_new_project(name, creator_id, start_date, end_date)
        
-        shared_users_name_email_str= str(request.POST.get("project-shared-user-input",False))
+        shared_users_name_email_str= str(request.POST.get("project-shared-user-name-email",False))
         shared_users = parseSharedUserStr(shared_users_name_email_str)
         #[{'name': '이진현', 'email': 'rig8696@likelion.org'}, {'name': '최지석', 'email': 'jiseok@example.con'}]
         for shared_user in shared_users :
@@ -51,15 +51,13 @@ def parseSharedUserStr(shared_users_name_email_str) :
         shared_user_info.append(user_info)
     return shared_user_info
 
-
-
-
 def edit_project(request,pid) :
     a_project = Project.objects.get(pid=pid)
     context = {
         "name" : a_project.name,
         "end_date" : a_project.end_date,
         "start_date" : a_project.start_date,
+        "pid" : a_project.pid
     }
     if request.method == 'GET' :
         return render(request, 'edit-project.html', context)

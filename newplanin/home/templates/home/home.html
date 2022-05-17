@@ -11,13 +11,14 @@
         <span>
         <p>포지션 이름 : {{project.name}}</p>
         <p>인터뷰 진행 기간 : {{project.start_date}} ~ {{project.end_date}}</p>
-        <p>참여 면접관 : </p>
-        <a herf = "">수정하기</a>
-        <!-- <form action="./delete-project/{{project.pid}}/" method ="post"> -->
-            <form action="{% url 'home:delete' project.pid %}/" method ="post">
-            {% csrf_token %}
-            <input type = "submit" value = "삭제하기"/>
-        </form>
+        <p>참여 면접관 : {% for shared_user in project.users.all %}</p>
+            {{shared_user.name}}, {{shared_user.email}}
+            {% endfor %}
+            {% comment %} <a href="{% url 'home:edit' project.pid %}">수정하기</a> {% endcomment %}
+            <form action="{% url 'home:delete' project.pid %}" method ="post">
+                {% csrf_token %}
+                <input type = "submit" value = "삭제하기"/>
+            </form>
         </span>
     {% endfor %}
     <div>

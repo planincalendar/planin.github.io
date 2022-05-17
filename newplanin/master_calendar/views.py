@@ -10,16 +10,18 @@ from django.urls import reverse
 
 # Create your views here.
 
-def guest_calendar(request,pid):
+def guest_calendar(request,pid,pass_key):
     #프로젝트의 내용을 담고 있는 링크?
     project = Project.objects.get(pid=pid)
+    user = UserTrackInfo.objects.get(pass_key=pass_key)
     context ={
         "pid":project.id,
-        "name" : project.name, 
-        "creator" : project.creator,
-        "users" : project.users,
+        "project_name" : project.name, 
+        "project_creator" : project.creator,
+        "shared_users" : project.users,
         "start_date" : project.start_date,
-        "end_date" : project.end_date
+        "end_date" : project.end_date,
+        "username" : user.name
     }
     if request.method == "GET" :
         return render(request,'master_calendar/guest_calendar.html',context)

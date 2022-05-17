@@ -6,7 +6,7 @@
 {%endblock%}
 {%block main%}
 <body>
-<form actions = "{% url 'home:edit' %}" method = "post" id="edit-project" onsubmit="return sendAlertEditProject()">
+<form actions = "{% url 'home:edit' pid %}" method = "post" id="edit-project" onsubmit="sendAlertEditProject()">
     {% csrf_token %}      
     <div class = 'project-setting-container'>
         <h1>포지션 수정하기</h1>
@@ -23,11 +23,11 @@
             <input type="date" id="calendar-end-date-input" name="project-end-date" value="{{end_date}}"/>
             </label>
         </div>
-        <div>
+        <!-- <div>
             <h4> 신규 면접관 추가하기 </h4>
             <h4> 이름/이메일 : </h4>
-            <input type = "text"id = "project-shared-user-input" name="project-shared-user-name-email" placeholder="김하이/Hi@example.io"/>
-        <div>  
+            <input type = "text"id = "project-shared-user-input" name="project-shared-user-name-email" placeholder={{}}/>
+        </div>   -->
     </div>
     <div>
         <input type = "submit" id="project-submit-btn"  value = "포지션 정보 수정하기">

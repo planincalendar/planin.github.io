@@ -4,7 +4,7 @@ from . import views
 app_name = "master_calendar"
 
 urlpatterns = [
-    path('<int:pid>',views.guest_calendar, name ="calendar"),
+    path('<str:pid>/<str:pass_key>',views.guest_calendar, name ="calendar"),
     #path("save-events/<int:pid>", views.save_events),
     # path('load-events/<int:pid>', views.load_events),
 
