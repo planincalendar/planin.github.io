@@ -7,10 +7,7 @@ from master_calendar.models import *
 
 # Create your views here.
 def load_project_lists(request) :
-    if not request.user.is_authenticated:
-        return redirect("login:login")
     if request.method == 'GET' :
-        context = {}
         user = User.objects.get(id=request.user.id)
         user_projects = Project.objects.filter(creator=user)
         context = {

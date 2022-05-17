@@ -3,12 +3,10 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser) :
     pass
-
 class UserTrackInfo(models.Model):
     name = models.CharField(max_length=32,null=True, blank=True)
     email = models.CharField(max_length=64,null=True, blank=True)
     pass_key = models.CharField(max_length=32, null=True, blank=True) #랜덤 
-    
 class Project(models.Model):
     name = models.CharField(max_length=32)
     pid = models.CharField(max_length=64, null=True, blank=True) #랜덤
