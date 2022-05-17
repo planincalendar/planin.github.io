@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from home.create import *
 from django.urls import reverse
 from master_calendar.models import *
+from home.email import sendEmailToUsers
 
 
 # Create your views here.
@@ -40,7 +41,8 @@ def create_project(request) :
             shared_user_info = track_user_info(name,email)
             #<UserTrackInfo: UserTrackInfo object ()>
             add_users_to_project(shared_user_info.id,new_project.id)
-        
+            #sendEmailToUsers(shared_user_info.id,new_project.id)
+
         return HttpResponseRedirect(reverse("home:home"))
 
 def parseSharedUserStr(shared_users_name_email_str) :

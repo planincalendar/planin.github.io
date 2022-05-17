@@ -22,7 +22,9 @@ function drawCalendar() {
         themeSystem: 'bootstrap5',
         timeZone: 'GMT+9',
         initialView: 'timeGridWeek',
-        validRange: {
+        validRange: { 
+            // start : new Date(document.getElementById("calendar-start-date").value),
+            // end : new Date(document.getElementById("calendar-end-date").value)
           },
 //        firstDay: (new Date().getDay()), 
         headerToolbar: {
@@ -55,78 +57,90 @@ function drawCalendar() {
             }
         },
         editable: true,
-       
     });
 
     calendar.render();
+    
 }    
-//일정 조정 기간 세팅하기 ... End date 가 자꾸 하루 전에 생성됨..
-function setBackgroundTime(){
+// 일정 조정 기간 세팅하기 ... End date 가 자꾸 하루 전에 생성됨..
+function setBackgroundTime(start_date,end_date){
     const cal_start_date = document.getElementById("calendar-start-date");
     const cal_end_date = document.getElementById("calendar-end-date");
-    //두 필드가 입력되면 캘린더 옵션에 validRange집어 넣기
-    if (!cal_start_date.value){
-        alert('시작 기간을 입력해주세요!')
-    }else if (!cal_end_date.value) {
-        alert('끝 기간을 입력해주세요!')
-    }else{
         var payload = {
         start : cal_start_date.value,
         end : cal_end_date.value
-    }
+        }
     calendar.setOption('validRange', payload);
-    }
 }
+
+
+async function getCalendarInfo (){
+    let response = await fetch('/calendar/<str:pid>/<str:pass_key>/',{
+        method: "GET",
+        body: JSON.stringify(),
+        headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCsrfToken(),
+        }
+    });
+    if (response.status == 200){
+        let responseBody = await response.json();
+        return responseBody;        
+    }else {
+        alert('이벤트를 불러오는데 실패했습니다.')
+    }
+
+} 
 
 
 
 //일정 제출하기
-async function sendAllEvents(user_id){
-    console.log(user_id)
+async function sendAllEvents(pass_key,pid){
+    console.log(pass_key,pid)
     let allEvents = calendar.getEvents();
     
     let payload = {
         slots: [],
     };
-    
+
     allEvents.forEach(eventData => {
         payload.slots.push({
             "name" : eventData.title,
             "start_timedate": eventData.start,
             "end_timedate" : eventData.end,
-            "creator_id": user_id,
+            "pass_key": pass_key,
+            "pid": pid
         })
     });
-
-    //받은 데이터 묶음 장고 모델로 보내기
-    let result = await eventsToModel(payload);
     
+    console.log(payload)
+    //받은 데이터 묶음 장고 모델로 보내기
+    let result = await eventsToModel(payload,pid,pass_key);
     if (!result){
         alert("일정 제출에 실패했습니다.");
         return;
     }
     alert('일정 제출이 완료되었습니다.');
+    
+    //수정하기 버튼 막기
     let button  = document.getElementById("data-load");
     button.disabled = true
-
-    
-    //제출하기 버튼이 수정하기로 변하기 
-    // const element = document.getElementById("data-upload");
-    // element.innerHTML = "수정하기";
-
 }
 
-async function eventsToModel(payload){
-    let response = await fetch('/calendar/save-events/',{
+async function eventsToModel(payload,pid,pass_key){
+    let response = await fetch(`/calendar/${pid}/${pass_key}/save-events/`,{
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCsrfToken(),
         }
-    });
+    })
+
     if (response.status != 200){
+        console.log('모델에 이벤트를 보낼 수 없습니다.')
         return false;
+
     }
     return true;
 }
@@ -146,7 +160,6 @@ function showCommonEvent(user_id){
         removeEventList(user_id)
     }
 }
-
 
 function showEventof(user_id){
 let checkbox = document.getElementById("my-event-checkbox")

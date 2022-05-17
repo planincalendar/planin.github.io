@@ -12,15 +12,14 @@ import json
 
 #owner_id 잠깐 없엠
 
-def create_slot(name,start_timedate,end_timedate,project_id,slot_creator_id) :
+def create_slot(name,start_timedate,end_timedate,pid,slot_creator_id) :
     new_slot = Slot()
     new_slot.name = name
     new_slot.start_timedate = start_timedate
     new_slot.end_timedate = end_timedate
-    new_slot.project = get_object_or_404(Project, id=project_id)
+    new_slot.project = get_object_or_404(Project, pid=pid)
     new_slot.creator = get_object_or_404(UserTrackInfo, id=slot_creator_id )
     new_slot.save()
-    # print(new_event.owner.id, new_event.owner.name)
     return new_slot
 
 # def create_user(name,email) :
