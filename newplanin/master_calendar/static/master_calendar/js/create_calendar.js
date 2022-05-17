@@ -86,14 +86,15 @@ async function sendAllEvents(user_id){
     let allEvents = calendar.getEvents();
     
     let payload = {
-        events: [],
+        slots: [],
     };
+    
     allEvents.forEach(eventData => {
-        payload.events.push({
-            "title" : eventData.title,
-            "start": eventData.start,
-            "end" : eventData.end,
-            "owner_id": user_id
+        payload.slots.push({
+            "name" : eventData.title,
+            "start_timedate": eventData.start,
+            "end_timedate" : eventData.end,
+            "creator_id": user_id,
         })
     });
 

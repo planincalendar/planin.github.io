@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+{% load static %}
+
+{%block title%}
+    <title>project list</title>
+    <script src="{% static 'home/js/create-project.js' %}"></script>
+{%endblock%}
+{%block main%}
+<body>
+    <form actions = "{% url 'home:create' %}" method = "post" id="create-project" onsubmit="return sendAlertNewProject()">
+        {% csrf_token %}      
+        <div class = 'project-setting-container'>
+            <h1>포지션 생성하기</h1>
+            <h3>생성할 포지션 정보를 입력해주세요</h3>
+            <div>    
+                <h4>포지션 이름 : </h4>
+                <input type="text" id="project-name-input" name="project-name"  maxlength="32" placeholder="ex.UXUI면접일"/>
+            </div>
+            <div>
+                <label for="appt">
+                <h4>인터뷰 진행 기간: </h4>
+                <input type="date" id="calendar-start-date-input" name="project-start-date"/>
+                <span>~</span>
+                <input type="date" id="calendar-end-date-input" name="project-end-date"/>
+                </label>
+            </div>
+            <div>
+                <h4> 면접관 추가하기 </h4>
+                <h4> 이름/이메일 : </h4>
+                <textarea form="create-project" id="project-shared-user-input" name="project-shared-user-name-email" 
+                placeholder="김00/hi@example.comment&#10;이00/test@example.com" style="width:255px;height:70px"></textarea>
+            <div>  
+        </div>
+        <div>
+            <input type = "submit" id="project-submit-btn"  value = "새 포지션 만들기">
+        </div>
+    </form>
+    <!-- Modal content -->
+    {%endblock%}
