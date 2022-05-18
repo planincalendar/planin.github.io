@@ -1,12 +1,10 @@
 {% autoescape off %}
 
-<h2> 안녕하세요! {{ shared_user }}님! <h2>
-<p>{{ project_title }} 면접 일정 조정에 초대 되셨습니다.
-<br/>{{ project_start_date }}에서 {{ project_end_date }}까지
-<br/>아래의 링크로 접속하여 가능한 일정을 입력해주세요. 
+안녕하세요! {{ shared_user }}님! 
+{{ project_title }} 면접 일정 조정에 초대 되셨습니다.
+{{ project_start_date }}에서 {{ project_end_date }}까지
+아래의 링크로 접속하여 가능한 일정을 입력해주세요. 
 {{ link }}
-
-
 
 {% endautoescape %}
 

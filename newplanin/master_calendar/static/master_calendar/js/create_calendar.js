@@ -1,6 +1,5 @@
 let calendar = null;
-let start_date = document.querySelector("#start-date");
-console.log(start_date)
+
 window.onload = onLoadActions;
 
 function onLoadActions (){
@@ -10,6 +9,8 @@ function onLoadActions (){
 //캘린더 옵션
 function drawCalendar() {
     let calendarEl = document.getElementById('calendar');
+    console.log(document.getElementById("calendar-start-date").value);
+    console.log(document.getElementById("calendar-end-date").value);
     
     calendar = new FullCalendar.Calendar(calendarEl, {
         scrollTime: '08:00:00',
@@ -22,12 +23,12 @@ function drawCalendar() {
         editable: true,
         droppable: true,
         themeSystem: 'bootstrap5',
-        timeZone: 'GMT+9',
+        // timeZone: 'GMT+9',
         initialView: 'timeGridWeek',
         validRange: { 
-            start : start_date
-            // start : new Date(document.getElementById("calendar-start-date").value),
-            // end : new Date(document.getElementById("calendar-end-date").value)
+            // start : start_date
+            start : new Date(document.getElementById("calendar-start-date").value),
+            end : new Date(document.getElementById("calendar-end-date").value),
           },
 //        firstDay: (new Date().getDay()), 
         headerToolbar: {

@@ -3,7 +3,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from home.create import *
 from django.urls import reverse
 from master_calendar.models import *
-from home.email import sendEmailToUsers
+from home.email import sendEmailToUser
 
 
 # Create your views here.
@@ -31,18 +31,25 @@ def create_project(request) :
        
         shared_users_name_email_str= str(request.POST.get("project-shared-user-name-email",False))
         shared_users = parseSharedUserStr(shared_users_name_email_str)
+        print(shared_users)
+
         for shared_user in shared_users :
             name = shared_user.get("name")
             email = shared_user.get("email")
             shared_user_info = track_user_info(name,email)
             add_users_to_project(shared_user_info.id,new_project.id)
-            #sendemail
+            pass_key = shared_user_info.pass_key
+            pid = new_project.pid
+            sendEmailToUser(pass_key,pid)
+
         return HttpResponseRedirect(reverse("home:home"))
 
 def parseSharedUserStr(shared_users_name_email_str) :
-    users_name_email = shared_users_name_email_str.split("\n")
+    users_name_email = shared_users_name_email_str.splitlines()
     shared_user_info = []
-    for a_user_name_email in users_name_email :
+    for a_user_name_email in users_name_email:
+        if a_user_name_email is None:
+            continue
         name_email = a_user_name_email.split("/")
         # name_email ['이진현','rig8696@naver.com']
         dictkey= ["name","email"] 
@@ -75,10 +82,16 @@ def edit_project(request,pid) :
         for shared_user in shared_users :
             name = shared_user.get("name")
             email = shared_user.get("email")
+            pass_key = shared_user.get("pass_key")
+            pid = a_project.pid
             new_shared_user = track_user_info(name,email)
             print(new_shared_user)
-            a_project.users.add(new_shared_user)
-            #sendemail
+            pass_key = new_shared_user.pass_key
+            pid = a_project.pid
+            print(pass_key)
+            print(pid)
+            sendEmailToUser(pass_key,pid)
+            
         return HttpResponseRedirect(reverse("home:home"))
 
 

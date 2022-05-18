@@ -1,0 +1,19 @@
+{% autoescape off %}
+
+안녕하세요! {{ shared_user }}님! 
+{{ project_start_date }}에서 {{ project_end_date }}내에서
+
+{{ project_title }} 면접이 가능한 슬롯을 전달 드립니다. 
+
+{% for slot in slots %}
+{{slot}}
+{% endslot %}
+
+참여한 면접관들은 아래와 같습니다. 
+{% for user in shared_users %}
+{{user.name}} , {{user.email}]}
+
+감사합니다
+플래닌 드림
+
+{% endautoescape %}

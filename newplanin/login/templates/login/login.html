@@ -10,7 +10,11 @@
     {% load socialaccount %}
     <div id = "login-container"> 
     <h1>안녕하세요, 플래닌입니다!</h1>
-    <a href = "{% provider_login_url 'google' %}">구글로 로그인</a>
+    <form action="{% provider_login_url 'google' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="구글로 로그인" />
+    </form>
+    {% comment %} <a href = "{% provider_login_url 'google' %}">구글로 로그인</a> {% endcomment %}
     </div>
 </body>
 </html>
