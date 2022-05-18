@@ -6,7 +6,7 @@ from master_calendar.logics.mail_sender import *
 
 def on_save_slots(pid, slots):
     
-    project = Project.objects.get(pid=pid);
+    project = Project.objects.get(pid=pid)
     users = list(project.users.all())
     user = slots[0].creator
     user_idx = users.index(user)
@@ -33,7 +33,8 @@ def on_save_slots(pid, slots):
 
             if len(slots) == 0:
                 print('겹치는 일정이 없습니다.')
-                sendErrorEmail(project,users)
+                for u in users:
+                    sendErrorEmail(project,u)
                 return
 
         for s in slots:

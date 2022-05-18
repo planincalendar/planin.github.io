@@ -1,0 +1,25 @@
+{% extends "loginbase.html"%}
+{% load static %}
+
+{% block title %}
+thankyou
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{%block body%}
+    <div class = "container-box"> 
+        <div> 
+            <h1>일정 제출이 완료되었습니다.</h1>
+            <p> 포지션에 참여하는 모든 면접관들의 캘린더를 입력을 기다리고 있어요.</p>
+            <p> 완료가 되면 메일로 모두가 가능한 시간을 전달드립니다</p>
+        </div>
+        <div id= "more-info"> 
+            <p>면접일정 조정 캘린더, 플래닌을 더 알아보세요!</p>
+            <div>
+            <button type="button" onclick="location.href=`{% url 'login:login' %}`">더 알아보기</button>
+            </div>
+        </div> 
+    </div>
+{%endblock%}

@@ -13,25 +13,25 @@
 </head>
 <body>
 
-<div class = "info-box">
+<div class = id = "info-box">
   <h1>{{username}}님의 공유 캘린더입니다.</h1>
   <div class ="position-info">
-      <h2>포지션 정보</h2>
-      <h4>포지션 이름 : {{project_name}}</h4>
-      <h4>인터뷰 참여 면접관 :</h4>
+      <h4>포지션 정보</h4>
+      <p>포지션 이름 : {{project_name}}<br/>
+      인터뷰 참여 면접관 :
       {% for user in shared_users %}
-      <h4>{{user.name}} , {{user.email}}
+      {{user.name}} , {{user.email}}<br/>
         <!-- 가능한 슬롯 보기 : <input type = "checkbox" id="my-event-checkbox" name="my-evnet"  onclick="showEventof({{user.id}})"> -->
-      </h4>
       {% endfor %}
   
-      <h4>인터뷰 진행 기간 :</h4>
-      {{start_date}} ~ {{end_date}} 
+      인터뷰 진행 기간 :<br/>
+      {{start_date}} ~ {{end_date}} <br/>
       <!-- <label for = "showcalendar"> 
         <input type = "checkbox" id="my-event-checkbox" name="my-evnet"  onclick="showEventof({{user.id}})"> 내 일정
         <input type = "checkbox" id="common-event-checkbox" name="common-event" onclick="showCommonEvent(3)" > 추출 일정 (지금은 id 3 user)
       </label> -->
   </div>
+</div>
   <input id="calendar-start-date" type="hidden" value="{{ start_date }}"/>
   <input id="calendar-end-date" type="hidden" value="{{ end_date }}"/>
 <div id="calendar-container">

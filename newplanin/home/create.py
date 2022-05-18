@@ -32,10 +32,10 @@ def track_user_info(name,email) :
     return target_user
 
 def generate_pass_key():
-    characters = list(string.ascii_letters + string.digits + "!@#$%^&*()")
+    characters = list(string.ascii_letters + string.digits)
     random.shuffle(characters)
     new_pass_key = []
-    for i in range(6) : 
+    for i in range(8) : 
 	    new_pass_key.append(random.choice(characters))
     random.shuffle(new_pass_key)
     return ''.join(new_pass_key)

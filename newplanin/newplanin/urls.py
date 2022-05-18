@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from datetime import datetime
 from django.http import JsonResponse
+from login import views
 # def google_login(request) :
 #     return redirect(reverse(login:))
 def social_login_cancel(request) :
@@ -35,6 +36,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('login/',include('login.urls')),
+    path('',views.login),
     path('home/', include('home.urls')),
     path('calendar/',include('master_calendar.urls')),
     

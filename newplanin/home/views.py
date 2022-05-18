@@ -8,15 +8,18 @@ from home.email import sendEmailToUser
 
 # Create your views here.
 def load_project_lists(request) :
-    if request.method == 'GET' :
-        user = User.objects.get(id=request.user.id)
-        user_projects = Project.objects.filter(creator=user)
-        context = {
-            "user_projects" : user_projects
-        }
-        return render(request, 'home/home.html',context)
-    if request.method == 'POST' :
-        return HttpResponseRedirect(reverse("home:create"))
+    if request.user.is_authenticated:
+        if request.method == 'GET' :
+            user = User.objects.get(id=request.user.id)
+            user_projects = Project.objects.filter(creator=user)
+            context = {
+                "user_projects" : user_projects
+            }
+            return render(request, 'home/home.html',context)
+        if request.method == 'POST' :
+            return HttpResponseRedirect(reverse("home:create"))
+    else :
+        return HttpResponseRedirect(reverse("login:login"))
 
 def create_project(request) :
     if request.method == 'GET' : 

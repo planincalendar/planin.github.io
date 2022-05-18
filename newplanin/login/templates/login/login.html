@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    <title>home</title>
+login main
 {% endblock %}
 
 {% block head %}
@@ -10,7 +10,7 @@
 
 {%block body%}
     {% load socialaccount %}
-    <div id = "login-container"> 
+    <div class = "container-box"> 
     <h1>안녕하세요, 플래닌입니다!</h1>
     <form action="{% provider_login_url 'google' %}" method="post">
         {% csrf_token %}

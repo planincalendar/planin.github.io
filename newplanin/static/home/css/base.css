@@ -1,3 +1,7 @@
+a:link { 
+  text-decoration: none; 
+}
+
 h1 {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 32px;
@@ -55,11 +59,11 @@ h4 {
   margin-top: 50px;
 }
 
-.buttons {
+/* .buttons {
   display: flex;
   justify-content: start;
   margin-top: 20px;
-}
+} */
 
 .edit {
   margin-right: 10px;

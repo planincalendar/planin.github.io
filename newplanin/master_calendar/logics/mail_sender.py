@@ -23,6 +23,7 @@ def send(project, user, slots) :
         'user': user.name,
         'project_title' : project.name,
         'content' : content,
+        
         # 'link' : 'http://127.0.0.1:8000/calendar/'+ project.pid +'/'+ user.pass_key
         })
     

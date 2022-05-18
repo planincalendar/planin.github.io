@@ -12,18 +12,18 @@
     <div class = 'project-editing-container'>
         <div class="project-setting">
         <h1>포지션 정보 수정하기</h1>
-        <h3>수정할 포지션 정보를 입력해주세요</h3>
+        <p>수정할 포지션 정보를 입력해주세요</p>
         </div>
         <div class = "project-editing">
                 <div>    
-                    <h4>포지션 이름 수정: </h4>
+                    <p>포지션 이름 수정: </p>
                     <input type="text" id="project-name-input" name="project-name"  maxlength="32" placeholder="{{name}}"/>
                 </div>
                 <div>
                     <label for="appt">
-                    <h4> 현재 인터뷰 진행 기간 :</h4>
-                    <h4>{{start_date}} ~ {{end_date}}</h4>
-                    <h4>인터뷰 진행 기간 수정하기 : </h4>
+                    <p> 현재 인터뷰 진행 기간 :</p>
+                    <p>{{start_date}} ~ {{end_date}}</p>
+                    <p>인터뷰 진행 기간 수정하기 : </span>
                     <input type="date" id="calendar-start-date-input" name="project-start-date"  value="{{start_date}}"/>
                     <span>~</span>
                     <h4> </h4>
@@ -31,14 +31,14 @@
                     </label>
                 </div>
                 <div>
-                    <h4> 현재 참여중인 면접관 : </h4>
+                    <p> 현재 참여중인 면접관 : </p>
                     <p>
                     {% for shared_user in shared_users %}
-                    {{shared_user.name}}, {{shared_user.email}}
+                    {{shared_user.name}}, {{shared_user.email}} <br/>
                     {% endfor %}
                     </p>
-                    <h4> 새로운 면접관 추가하기 </h4>
-                    <h4> 이름/이메일 : </h4>
+                    <p> 새로운 면접관 추가하기 </p>
+                    <p> 이름/이메일 : </p>
                     <textarea form="edit-project" id="project-shared-user-input" name="project-shared-user-name-email" 
                     placeholder="김00/hi@example.comment&#10;이00/test@example.com" style="width:255px;height:70px"></textarea>  
             </div>
