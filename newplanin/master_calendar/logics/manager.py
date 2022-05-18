@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
+import imp
 from master_calendar.logics.tools import *
 from master_calendar.models import *
 from master_calendar.logics.tools import *
+from master_calendar.logics.mail_sender import *
 
 def on_save_slots(pid, slots):
     
@@ -34,10 +35,19 @@ def on_save_slots(pid, slots):
                 print('겹치는 일정이 없습니다.')
                 return
 
+        for s in slots:
+            s.start_timedate = s.start_timedate + timedelta(hours=9)
+            s.end_timedate = s.end_timedate + timedelta(hours=9)
+
+        # Debug
         i = 0
         for s in slots:
             i += 1
             print(f"{i}: {s.start_timedate} ~ {s.end_timedate}")
+
+        for u in users:
+            send(project, u, slots)
+        #
         
     else:
         print(f'아직 미제출 있음 : {has_not_posted}명')

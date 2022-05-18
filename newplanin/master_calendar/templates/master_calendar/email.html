@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+안녕하세요! {{ user }}님! 
+{{ project_title }} 면접 일정 조정이 완료되었습니다.
+
+{{ content }}
+
+{% comment %} 아래의 링크로 접속하여 자세한 일정을 확인해주세요. {% endcomment %}
+{% comment %} {{ link }} {% endcomment %}
+
+{% endautoescape %}
