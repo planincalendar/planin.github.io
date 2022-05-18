@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-a*boc+%*_f!+sb1t(!fb=f9v!8=v1(t!!)z(8(z4g8=+a%w97s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["www.hiplanin.shop"]
 
 
 # Application definition
