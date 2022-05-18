@@ -1,4 +1,6 @@
 let calendar = null;
+let start_date = document.querySelector("#start-date");
+console.log(start_date)
 window.onload = onLoadActions;
 
 function onLoadActions (){
@@ -14,8 +16,8 @@ function drawCalendar() {
         businessHours : false,
         expandRows: true,
         longPressDelay: 1000,
-        slotMinTime: '00:00',
-        slotMaxTime: '24:00',
+        slotMinTime: '06:00',
+        slotMaxTime: '20:00',
         dragScroll: true,
         editable: true,
         droppable: true,
@@ -23,6 +25,7 @@ function drawCalendar() {
         timeZone: 'GMT+9',
         initialView: 'timeGridWeek',
         validRange: { 
+            start : start_date
             // start : new Date(document.getElementById("calendar-start-date").value),
             // end : new Date(document.getElementById("calendar-end-date").value)
           },
@@ -40,7 +43,7 @@ function drawCalendar() {
         selectConstraint: null, 
         selectMirror: true,
         select: function(arg) {
-            let title = prompt('일정 내용:');
+            let title = '가능한 시간'
             if (title) {
             calendar.addEvent({
                 title: title,
@@ -151,51 +154,52 @@ function getCsrfToken() {
         .split("=")[1];
 }
 
-//내 일정을 캘린더에 보여주고 지우기
-function showCommonEvent(user_id){
-    let checkbox = document.getElementById("common-event-checkbox")
-    if (checkbox.checked){
-        addEventList(user_id)
-    }else{
-        removeEventList(user_id)
-    }
-}
+// function showCommonEvent(user_id){
+//     let checkbox = document.getElementById("common-event-checkbox")
+//     if (checkbox.checked){
+//         addEventList(user_id)
+//     }else{
+//         removeEventList(user_id)
+//     }
+// }
 
-function showEventof(user_id){
+//내 일정을 캘린더에 보여주고 지우기
+
+function showEventof(user_id,pid,pass_key){
 let checkbox = document.getElementById("my-event-checkbox")
     if (checkbox.checked){
-        addEventList(user_id)
+        addEventList(user_id,pid,pass_key)
     }else{
-        removeEventList(user_id)
+        removeEventList(user_id,pid,pass_key)
     }
 }
-function addEventList(user_id){
-    loadEventList(user_id).then(eventList => {
+function addEventList(user_id,pid,pass_key){
+    loadEventList(user_id,pid,pass_key).then(eventList => {
         for (const e of eventList.events) {
             let eventData = {
-                start: e.start_date,
-                end: e.end_date,
-                title: e.title,
-                id: e.owner_id,
+                start: e.start_timedate,
+                end: e.end_timedate,
+                title: e.name,
+                id: e.creator_id,
             }
             calendar.addEvent(eventData);
         }
     })    
 }
-function removeEventList(user_id){
-    loadEventList(user_id).then(eventList => {
+function removeEventList(user_id,pid,pass_key){
+    loadEventList(user_id,pid,pass_key).then(eventList => {
         for (const e of eventList.events) {
-            let event_id = e.owner_id 
+            let event_id = e.creator_id 
             let event_of_the_id = calendar.getEventById(event_id)
             event_of_the_id.remove()
             }
     })
 }
-async function loadEventList(user_id){
+async function loadEventList(user_id,pid,pass_key){
     let payload = {
-        owner_id: user_id
+        creator_id: user_id
     }
-    let response = await fetch('/calendar/load-events/',{
+    let response = await fetch(`/calendar/${pid}/${pass_key}/load-events/`,{
         method: "POST",
         body: JSON.stringify(payload),
         headers: {

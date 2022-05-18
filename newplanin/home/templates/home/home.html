@@ -14,7 +14,7 @@
         <p>참여 면접관 : {% for shared_user in project.users.all %}</p>
             {{shared_user.name}}, {{shared_user.email}}
             {% endfor %}
-            {% comment %} <a href="{% url 'home:edit' project.pid %}">수정하기</a> {% endcomment %}
+            <a href="{% url 'home:edit' project.pid %}">수정하기</a>
             <form action="{% url 'home:delete' project.pid %}" method ="post">
                 {% csrf_token %}
                 <input type = "submit" value = "삭제하기"/>

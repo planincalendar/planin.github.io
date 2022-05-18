@@ -26,10 +26,10 @@ def guest_calendar(request,pid,pass_key):
         "user" : user,
         "username" : user.name,
         "pass_key" : pass_key,
-        
-       
     }
+    
     if request.method == "GET" :
+        print(context.get("start_date"))
         return render(request,'master_calendar/guest_calendar.html',context)
 
 def save_events(request,pid,pass_key) :
@@ -56,12 +56,12 @@ def save_events(request,pid,pass_key) :
 #     elif request.method == 'POST':
 #         return redirect("/create-project/")
 
-# def load_slots(request,pid) :
+# def load_events(request,pid,pass_key) :
 #     # print(request.user)로도 됨?
 #     response_body = json.loads(request.body)
-#     owner_id = response_body.get("owner_id")
-#     event_owner = Event.objects.filter(owner_id = owner_id)
-#     event_list = list(event_owner.values('title','start_date','end_date','owner_id'))
+#     creator_id = response_body.get("creator_id")
+#     creator_events = Slot.objects.filter(creator_id = creator_id)
+#     event_list = list(creator_events.values('name','start_timedate','end_timedate','project_id'))
 #     return JsonResponse({
 #         "events" : event_list
 #     })

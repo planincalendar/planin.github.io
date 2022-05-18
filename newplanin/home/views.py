@@ -31,15 +31,12 @@ def create_project(request) :
        
         shared_users_name_email_str= str(request.POST.get("project-shared-user-name-email",False))
         shared_users = parseSharedUserStr(shared_users_name_email_str)
-        #[{'name': '이진현', 'email': 'rig8696@likelion.org'}, {'name': '최지석', 'email': 'jiseok@example.con'}]
         for shared_user in shared_users :
             name = shared_user.get("name")
             email = shared_user.get("email")
             shared_user_info = track_user_info(name,email)
-            #<UserTrackInfo: UserTrackInfo object ()>
             add_users_to_project(shared_user_info.id,new_project.id)
-            #sendEmailToUsers(shared_user_info.id,new_project.id)
-
+            #sendemail
         return HttpResponseRedirect(reverse("home:home"))
 
 def parseSharedUserStr(shared_users_name_email_str) :
@@ -55,21 +52,34 @@ def parseSharedUserStr(shared_users_name_email_str) :
 
 def edit_project(request,pid) :
     a_project = Project.objects.get(pid=pid)
+    shared_users = a_project.users.all()
     context = {
         "name" : a_project.name,
         "end_date" : a_project.end_date,
         "start_date" : a_project.start_date,
-        "pid" : a_project.pid
+        "pid" : pid,
+        "shared_users" : shared_users
     }
     if request.method == 'GET' :
-        return render(request, 'edit-project.html', context)
+        return render(request,'home/edit-project.html',context)
 
     if request.method == 'POST' :
-        a_project.name = request.POST["name"]
-        a_project.end_date = request.POST["end_date"]
-        a_project.start_date = request.POST["start_date"]
+        a_project.name = request.POST["project-name"]
+        a_project.end_date = request.POST["project-end-date"]
+        a_project.start_date = request.POST["project-start-date"]
         a_project.save()
-        return HttpResponseRedirect(reverse("home:home",args=[a_project.pid]))
+
+        shared_users_name_email_str= str(request.POST.get("project-shared-user-name-email",False))
+        shared_users = parseSharedUserStr(shared_users_name_email_str)
+
+        for shared_user in shared_users :
+            name = shared_user.get("name")
+            email = shared_user.get("email")
+            new_shared_user = track_user_info(name,email)
+            print(new_shared_user)
+            a_project.users.add(new_shared_user)
+            #sendemail
+        return HttpResponseRedirect(reverse("home:home"))
 
 
 def delete_project(request,pid) :
