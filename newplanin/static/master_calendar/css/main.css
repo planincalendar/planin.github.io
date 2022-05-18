@@ -2,10 +2,25 @@ body{
   background-color:  #f4f4f4 ;
 }
 
-.info-box{
+#info-box{
   border : solid 0.5px grey; 
+  font-family: "Noto Sans KR", sans-serif;
+  border: 0.5px solid;
+  min-width: 300px;
+  border-radius: 25px;
+  box-shadow: 2px 3px 5px 0px gray;
+  margin: 25px;
+  height : 320px;
+  padding: 25px;
+  flex-shrink: 0;
+  flex-grow: 1;
 }
 
+
+#calendar{
+  margin :20;
+  
+}
 
 /* The switch - the box around the slider */
 .switch {

@@ -48,8 +48,8 @@ def save_events(request, pid, pass_key) :
             creator = get_object_or_404(UserTrackInfo,pass_key=pass_key)
             slot_model_list.append(create_slot(name, start_timedate,end_timedate, pid,creator.id))
 
-    on_save_slots(pid, slot_model_list)
-    return redirect("master_calendar:thankyou")
+        on_save_slots(pid, slot_model_list)
+        return HttpResponseRedirect(reverse("master_calendar:thankyou"))
 
 def thank_you(request) :
     return render(request,'master_calendar/thankyou.html')

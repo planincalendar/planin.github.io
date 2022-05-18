@@ -23,6 +23,7 @@ function drawCalendar() {
         editable: true,
         droppable: true,
         themeSystem: 'bootstrap5',
+        windowResizeDelay : 0,
         // timeZone: 'GMT+9',
         initialView: 'timeGridWeek',
         validRange: { 

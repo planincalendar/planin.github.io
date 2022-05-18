@@ -13,6 +13,7 @@ function drawCalendar() {
     console.log(document.getElementById("calendar-end-date").value);
     
     calendar = new FullCalendar.Calendar(calendarEl, {
+        
         scrollTime: '08:00:00',
         businessHours : false,
         expandRows: true,
@@ -23,6 +24,7 @@ function drawCalendar() {
         editable: true,
         droppable: true,
         themeSystem: 'bootstrap5',
+        windowResizeDelay : 0,
         // timeZone: 'GMT+9',
         initialView: 'timeGridWeek',
         validRange: { 
@@ -65,7 +67,9 @@ function drawCalendar() {
 
     calendar.render();
     
-}    
+}
+calendar.addOption('themeSystem', 'bootstrap')
+
 // 일정 조정 기간 세팅하기 ... End date 가 자꾸 하루 전에 생성됨..
 function setBackgroundTime(start_date,end_date){
     const cal_start_date = document.getElementById("calendar-start-date");
