@@ -7,10 +7,13 @@
 {%endblock%}
 {%block body%}
     <form actions = "{% url 'home:create' %}" method = "post" id="create-project" onsubmit="return sendAlertNewProject()">
-        {% csrf_token %}      
-        <div class = 'project-setting-container'>
+        {% csrf_token %} 
+        <div>     
+        <div class = 'project-setting'>
             <h1>포지션 생성하기</h1>
             <h3>생성할 포지션 정보를 입력해주세요</h3>
+        </div>
+            <div class="position-container">
             <div>    
                 <h4>포지션 이름 : </h4>
                 <input type="text" id="project-name-input" name="project-name"  maxlength="32" placeholder="ex.UXUI면접일"/>
@@ -33,6 +36,7 @@
         <div>
             <h4> 아래 버튼을 누르면 면접관들에게 초대 메일이 발송됩니다 </h4>
             <input type = "submit" id="project-submit-btn"  value = "면접관 초대하기">
+        </div>
         </div>
     </form>
     <!-- Modal content -->

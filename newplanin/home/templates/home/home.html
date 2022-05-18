@@ -4,22 +4,27 @@
 {% block title %}project list{% endblock %}
 
 {% block body %}
-    <h1> {{user.username}}님의 진행중인 포지션 입니다.</h1>
+    <h1 class="calendar-title"> {{user.username}}님의 진행중인 포지션 입니다.</h1>
+    <div class="project-wrapper">
     {% for project in user_projects %}
-        <div>
+        <div class="container-box">
         <p>포지션 이름 : {{project.name}}</p>
         <p>인터뷰 진행 기간 : {{project.start_date}} ~ {{project.end_date}}</p>
-        <p>참여 면접관 : {% for shared_user in project.users.all %}</p>
+        <p>참여 면접관 : 
+            {% for shared_user in project.users.all %}</p>
             {{shared_user.name}}, {{shared_user.email}}
-            {% endfor %}
-            <a href="{% url 'home:edit' project.pid %}">수정하기</a>
+    {% endfor %}
+            <div class="buttons">
+            <button class="edit" type = "submit" onclick="location.href = `{% url 'home:edit' project.pid %}`">수정하기</button>
             <form action="{% url 'home:delete' project.pid %}" method ="post">
                 {% csrf_token %}
                 <input type = "submit" value = "삭제하기"/>
             </form>
+            </div>
         </div>
     {% endfor %}
-    <div>
+    </div>
+    <div class="make-position">
         <button type = "submit" onclick="location.href = `{% url 'home:create' %}`">포지션 생성하기</button>
     </div>
 {%endblock%}
