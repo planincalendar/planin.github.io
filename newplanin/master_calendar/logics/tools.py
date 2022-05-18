@@ -1,9 +1,9 @@
-from asyncio import events
-from models import *
 from datetime import *
+from master_calendar.models import *
 
 class Tools:
     def sort(slots):
+        slots = list(slots)
         totalCount = len(slots) - 1
 
         for i in range(totalCount):
@@ -16,6 +16,8 @@ class Tools:
                 if current.start_timedate > next.start_timedate:
                     slots[j] = next
                     slots[j + 1] = current
+
+        return slots
 
                 
     def collapse(slot_a, slot_b, tolerant = False):
@@ -32,12 +34,14 @@ class Tools:
         for _ in range(1, len(events)):
             target = events[idx]
 
-            if current.collapse(target, True):
+            if Tools.collapse(current,target, True):
                 current.end_timedate = target.end_timedate
                 events.remove(target)
             else:
                 current = target
                 idx += 1
+
+        return events
 
 
     def reverse(events_in, start, end):
@@ -59,13 +63,14 @@ class Tools:
 
         for current in events_a:
             for target in events_b:
-                if current.collapse(target):
-                    if current.start > target.start: start = current.start
-                    else: start = target.start
+                if Tools.collapse(current, target):
+                    if current.start_timedate > target.start_timedate: start = current.start_timedate
+                    else: start = target.start_timedate
 
-                    if current.end > target.end: end = target.end
-                    else: end = current.end
+                    if current.end_timedate > target.end_timedate: end = target.end_timedate
+                    else: end = current.end_timedate
 
                     results.append(Slot.create(start, end))
 
         return results
+        

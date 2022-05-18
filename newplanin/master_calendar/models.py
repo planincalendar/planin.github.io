@@ -3,15 +3,21 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser) :
     pass
+
 class UserTrackInfo(models.Model):
     name = models.CharField(max_length=32,null=True, blank=True)
     email = models.CharField(max_length=64,null=True, blank=True)
     pass_key = models.CharField(max_length=32, null=True, blank=True) #랜덤 
+
+class PostingInfo(models.Model):
+    has_posted = models.BooleanField(default=False)
+    
 class Project(models.Model):
     name = models.CharField(max_length=32)
     pid = models.CharField(max_length=64, null=True, blank=True) #랜덤
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects_created", null=True, blank=True)
     users = models.ManyToManyField(UserTrackInfo, related_name="projects")
+    user_posting_info = models.ManyToManyField(PostingInfo, related_name="project")
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
 

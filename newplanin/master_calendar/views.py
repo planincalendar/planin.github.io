@@ -7,6 +7,7 @@ from master_calendar.create_models import *
 import json
 from django.urls import reverse
 from datetime import datetime
+from master_calendar.logics.manager import *
 
 
 # Create your views here.
@@ -32,22 +33,23 @@ def guest_calendar(request,pid,pass_key):
         print(context.get("start_date"))
         return render(request,'master_calendar/guest_calendar.html',context)
 
-def save_events(request,pid,pass_key) :
-    print(pid, pass_key)
+def save_events(request, pid, pass_key) :
     if request.method == "POST" :
         response_body = json.loads(request.body)
         slots = response_body.get("slots")
+        slot_model_list = []
 
         for slot in slots: 
             name = slot.get("name") 
             start_timedate = slot.get("start_timedate")
             end_timedate = slot.get("end_timedate")
-            pid = slot.get("pid") 
+            pid = slot.get("pid")
             pass_key= slot.get("pass_key")
             creator = get_object_or_404(UserTrackInfo,pass_key=pass_key)
-            create_slot(name,start_timedate,end_timedate,pid,creator.id)
-        
-        return JsonResponse({})
+            slot_model_list.append(create_slot(name, start_timedate,end_timedate, pid,creator.id))
+
+    on_save_slots(pid, slot_model_list)
+    return JsonResponse({})
 
 
 # def calendar(request):

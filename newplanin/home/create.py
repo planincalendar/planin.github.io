@@ -1,6 +1,4 @@
-
-
-from master_calendar.models import Project, UserTrackInfo, User
+from master_calendar.models import PostingInfo, Project, UserTrackInfo, User
 from django.shortcuts import get_object_or_404
 import string
 import random
@@ -9,15 +7,20 @@ def create_new_project(name, creator_id, start_date, end_date) :
     new_project = Project()
     new_project.name = name # 프로젝트 제목 생성
     new_project.pid = generate_pass_key()
+
     new_project.creator = get_object_or_404(User,id = creator_id)
     new_project.start_date = start_date
     new_project.end_date = end_date
+    
     new_project.save()
     return new_project
 
 def add_users_to_project (shared_user_id,project_id) : 
-    target_project = get_object_or_404(Project,id=project_id)
-    target_project.users.add(get_object_or_404(UserTrackInfo,id=shared_user_id))
+    target_project = get_object_or_404(Project, id=project_id)
+    target_project.users.add(get_object_or_404(UserTrackInfo, id=shared_user_id))
+    new_posting_info = PostingInfo()
+    new_posting_info.save()
+    target_project.user_posting_info.add(new_posting_info)
     target_project.save()
 
 def track_user_info(name,email) :
