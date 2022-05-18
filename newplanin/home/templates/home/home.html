@@ -1,14 +1,12 @@
-{% comment %} {% extends "base.html"%}  {% endcomment %}
+{% extends "base.html"%}
 {% load static %}
 
-{%block title%}
-    <title>project list</title>
-{%endblock%}
-{%block main%}
-<body>
+{% block title %}project list{% endblock %}
+
+{% block body %}
     <h1> {{user.username}}님의 진행중인 포지션 입니다.</h1>
     {% for project in user_projects %}
-        <span>
+        <div>
         <p>포지션 이름 : {{project.name}}</p>
         <p>인터뷰 진행 기간 : {{project.start_date}} ~ {{project.end_date}}</p>
         <p>참여 면접관 : {% for shared_user in project.users.all %}</p>
@@ -19,11 +17,9 @@
                 {% csrf_token %}
                 <input type = "submit" value = "삭제하기"/>
             </form>
-        </span>
+        </div>
     {% endfor %}
     <div>
-        <button type = "submit" onclick="location.href = `{% url 'home:create' %}`">프로젝트 생성하기</button>
+        <button type = "submit" onclick="location.href = `{% url 'home:create' %}`">포지션 생성하기</button>
     </div>
-</body>
-</html>
 {%endblock%}

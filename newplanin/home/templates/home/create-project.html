@@ -1,14 +1,11 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-{% load static %}
-
-{%block title%}
-    <title>project list</title>
-    <script src="{% static 'home/js/create-project.js' %}"></script>
+{%block title%}project dashboard{% endblock %}
+{% block head %}
+<script src="{% static 'home/js/create-project.js' %}"></script>
 {%endblock%}
-{%block main%}
-<body>
+{%block body%}
     <form actions = "{% url 'home:create' %}" method = "post" id="create-project" onsubmit="return sendAlertNewProject()">
         {% csrf_token %}      
         <div class = 'project-setting-container'>
@@ -39,4 +36,4 @@
         </div>
     </form>
     <!-- Modal content -->
-    {%endblock%}
+{%endblock%}

@@ -1,12 +1,12 @@
+
+{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-{% endblock %}
-    <title>project edit</title>
+{% block title %} project edit {% endblock %}
+{% block head%}    
     <script src="{% static 'home/js/create-project.js' %}"></script>
-{% block main %}
 {% endblock %}
-<body>
+{% block body %}
 <form actions = "{% url 'home:edit' pid %}" method = "post" id="edit-project" onsubmit="sendAlertEditProject()">
     {% csrf_token %}      
     <div class = 'project-setting-container'>
@@ -42,3 +42,4 @@
         <input type = "submit" id="project-submit-btn"  value = "포지션 정보 수정하기">
     </div>
 </form>
+{% endblock %}
