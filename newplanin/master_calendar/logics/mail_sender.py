@@ -37,3 +37,25 @@ def send(project, user, slots) :
         return HttpResponseRedirect(reverse('home:home'))    
     else :
         return HttpResponse('Make sure all fields are entered and valid.')
+
+def sendErrorEmail(project, user) :
+
+    title = f'[플래닌] {user.name}님, {project.name}의 면접 가능한 일정이 없습니다.'
+
+    message = render_to_string('master_calendar/email_slot_unavailable.html', {
+        'user': user.name,
+        'project_title' : project.name,
+        # 'link' : 'http://127.0.0.1:8000/calendar/'+ project.pid +'/'+ user.pass_key
+        })
+    
+    if title and message :
+        try :
+            to_email = user.email
+            send_email = EmailMessage(title, message, to=[to_email])
+            send_email.send()
+
+        except BadHeaderError :
+            return HttpResponse('오류발생 : Invalid header found.')
+        return HttpResponseRedirect(reverse('home:home'))    
+    else :
+        return HttpResponse('Make sure all fields are entered and valid.')

@@ -33,6 +33,7 @@ def on_save_slots(pid, slots):
 
             if len(slots) == 0:
                 print('겹치는 일정이 없습니다.')
+                sendErrorEmail(project,users)
                 return
 
         for s in slots:

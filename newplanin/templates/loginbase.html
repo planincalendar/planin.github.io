@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,23 +15,6 @@
 
   {% block head %}
   {% endblock %}
-
-</head>
-<body>
-    <nav id="nav-bar">
-        <div class="nav-item">
-            <a href="{% url 'home:home' %}">대시보드</a>
-        </div>
-        <div class="nav-item">
-            <a href="{% url 'home:create' %}">포지션 생성</a>
-        </div>
-        <div class="nav-logout">
-        <form action="" method = "post">
-            {% csrf_token %}
-                <button class = "button-logout" type="submit">로그아웃</button>
-            </form>
-        </div>
-    </nav>
 
     {% block body %}
     {% endblock %}
