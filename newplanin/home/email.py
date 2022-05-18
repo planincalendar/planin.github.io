@@ -20,7 +20,7 @@ def sendEmailToUser(pass_key,pid) :
         'project_title' : project.name,
         'project_start_date' : project.start_date,
         'project_end_date' : project.end_date,
-        'link' : 'http://127.0.0.1:8000/calendar/'+project.pid+'/'+shared_user.pass_key+'/'
+        'link' : 'https://www.hiplanin.shop/calendar/'+project.pid+'/'+shared_user.pass_key+'/'
         })
     
     if mail_subject and message :
