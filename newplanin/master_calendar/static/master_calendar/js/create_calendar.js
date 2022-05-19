@@ -121,18 +121,18 @@ async function sendAllEvents(pass_key,pid){
         })
     });
     
-    console.log(payload)
-    //받은 데이터 묶음 장고 모델로 보내기
+    //받은 데이터 묶음 장고 모델로 보내기//수정하기 버튼 막기
+    let button  = document.getElementById("data-load");
+    button.disabled = true
+
     let result = await eventsToModel(payload,pid,pass_key);
     if (!result){
         alert("일정 제출에 실패했습니다.");
         return;
     }
     alert('일정 제출이 완료되었습니다.');
+    location.href = "https://hiplanin.shop/calendar/thankyou/";
     
-    //수정하기 버튼 막기
-    let button  = document.getElementById("data-load");
-    button.disabled = true
 }
 
 async function eventsToModel(payload,pid,pass_key){
